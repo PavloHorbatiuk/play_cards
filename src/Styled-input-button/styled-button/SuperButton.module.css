@@ -9,7 +9,7 @@
     overflow: hidden;
     transition: all 0.3s;
     width: 100%;
-    background-color: #fbae23
+    background-color: #00c5e7
 }
 
 .default::before {
@@ -26,11 +26,11 @@
     font-weight: 400;
     font-family: 'Jost', sans-serif;
     border-radius: 3px;
+    background: #42b4e9
 }
 
 .default:hover {
-    background-color: #fbae23;
-    color: #fff;
+    background: #42b4e9;
 }
 
 .default:hover::before {

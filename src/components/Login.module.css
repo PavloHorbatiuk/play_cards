@@ -5,6 +5,8 @@
 .generalContainer {
     background-color: #fff;
     color: rgb(95, 88, 88);
+    background: url('./../assets/backgraund.jpg') top left repeat;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,6 +21,8 @@
     border-radius: 5px;
     box-shadow: 0 0 10px rgb(0 0 0 / 10%);
     margin-bottom: 30px;
+    Width: 413px;
+    Height: 600px;
 }
 
 .container h1 {
