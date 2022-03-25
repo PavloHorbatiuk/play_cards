@@ -1,28 +1,26 @@
 import { Dispatch } from "redux";
-import { authAPI } from "../api/api";
+import { authAPI } from "../../api/api";
 
 enum ACTIONS_TYPE {
-    SET_LOGIN = 'SET/LOGIN',
+    SET_LOGGED_IN = 'login/SET-IS-LOGGED-IN',
 }
 
 
 
-export type AuthReducers = typeof initialState
+export type InitialStateType = typeof initialState
 
 const initialState = {
-    email: '',
-    name: '',
-    avatar: '',
+    isLoggedIn: false
 
 
 }
 
 
-export const AuthReducers = (state: AuthReducers = initialState, action: ActionsType) => {
+export const AuthReducers = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
-        case ACTIONS_TYPE.SET_LOGIN: {
+        case ACTIONS_TYPE.SET_LOGGED_IN: {
             return {
-                ...state, Email: action.payload,
+                ...state, isLoggedIn: action.payload,
             }
         }
         default:
@@ -30,7 +28,7 @@ export const AuthReducers = (state: AuthReducers = initialState, action: Actions
     }
 }
 
-export const setLoginAC = (name: string) => ({ type: ACTIONS_TYPE.SET_LOGIN, payload: name } as const)
+export const setLoginAC = (value: boolean) => ({ type: ACTIONS_TYPE.SET_LOGGED_IN, payload: value } as const)
 
 export const authThunk = (email: string, password: string, rememberMe: boolean) => {
     return (dispatch: Dispatch) => {
