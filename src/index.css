@@ -2,7 +2,7 @@
 
 body {
   margin: 0;
-  font-family: Viaoda+Libre, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Viaoda+Libre', 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -15,22 +15,18 @@ code {
     monospace;
 }
 
-a {
-  color: #0095f6;
-  text-decoration: none;
-}
 
-span {
-  color: #0095f6
-}
-
-span:hover {
-  color: #048de9;
-  line-height: 1.7
-}
-
-*,
-::after,
-::before {
-  box-sizing: border-box;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: 'Viaoda+Libre', sans-serif;
 }
