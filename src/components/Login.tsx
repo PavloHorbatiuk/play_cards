@@ -5,7 +5,6 @@ import s from './Login.module.css'
 
 function Login() {
 
-
     return (
         <div className={s.generalContainer}>
             <LoginPage />

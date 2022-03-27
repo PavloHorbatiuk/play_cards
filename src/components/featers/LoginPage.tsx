@@ -8,10 +8,14 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useFormik } from 'formik';
-import ThemeProvider from '@mui/system/ThemeProvider/ThemeProvider';
 import Paper from '@mui/material/Paper/Paper';
 import styled from '@mui/material/styles/styled';
-import { theme } from './LoginPageMUI';
+import BasicAlerts from './alerts/Alerts';
+import { useDispatch } from 'react-redux';
+import { loginTC } from '../../store/Login/auth-reducers';
+import { useAppSelector } from '../../store/state';
+import { Navigate } from 'react-router-dom';
+
 
 
 type FormikErrorType = {
@@ -19,6 +23,7 @@ type FormikErrorType = {
     password?: string
     rememberMe?: boolean
 }
+
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -30,6 +35,8 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export const LoginPage = () => {
 
+    const dispatch = useDispatch();
+    const IsloggedIn = useAppSelector(state => state.login)
 
     const formik = useFormik({
         initialValues: {
@@ -52,17 +59,19 @@ export const LoginPage = () => {
             return errors;
         },
         onSubmit: values => {
-            alert(JSON.stringify(values))
+            dispatch(loginTC(values))
             formik.resetForm();
         },
     })
+    if (IsloggedIn.isLoggedIn) {
+        return <Navigate to='/' />
+    }
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
             <Item>
                 <form onSubmit={formik.handleSubmit}>
                     <FormControl>
                         <FormLabel>
-
                             <p>To log in get registered
                                 <a href={'https://social-network.samuraijs.com/'}
                                     target={'_blank'}> here
@@ -71,7 +80,6 @@ export const LoginPage = () => {
                             <p>or use common test account credentials:</p>
                             <p>Email: free@samuraijs.com</p>
                             <p>Password: free</p>
-
                         </FormLabel>
                         <FormGroup>
                             <TextField
@@ -79,7 +87,7 @@ export const LoginPage = () => {
                                 margin="normal"
                                 {...formik.getFieldProps('email')} />
                             {formik.touched.email && formik.errors.email
-                                ? <div style={{ 'color': 'red' }}>{formik.errors.email}</div>
+                                ? <div >< BasicAlerts error={formik.errors.email} /></div>
                                 : null
                             }
                             <TextField
@@ -89,15 +97,15 @@ export const LoginPage = () => {
                                 {...formik.getFieldProps('password')}
                             />
                             {formik.touched.password && formik.errors.password
-                                ? <div style={{ 'color': 'red' }}>{formik.errors.password}</div>
+                                ? <div><BasicAlerts error={formik.errors.password} /></div>
                                 : null
                             }
                             <FormControlLabel label={'Remember me'} control={<Checkbox />}
                                 {...formik.getFieldProps('rememberMe')} />
-                            <ThemeProvider theme={theme}>   <Button type={'submit'} variant={'contained'} color={'primary'}>
-                                Login
-                            </Button>
-                            </ThemeProvider>
+                           
+                                <Button type={'submit'} variant={'contained'} color={'primary'}>
+                                    Login
+                                </Button>                          
                         </FormGroup>
                     </FormControl>
                 </form>

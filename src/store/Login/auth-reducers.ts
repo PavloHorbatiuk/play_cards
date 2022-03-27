@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { authAPI } from "../../api/api";
+import { authAPI, LoginParamsType } from "../../api/api";
 
 enum ACTIONS_TYPE {
     SET_LOGGED_IN = 'login/SET-IS-LOGGED-IN',
@@ -28,14 +28,14 @@ export const AuthReducers = (state: InitialStateType = initialState, action: Act
     }
 }
 
-export const setLoginAC = (value: boolean) => ({ type: ACTIONS_TYPE.SET_LOGGED_IN, payload: value } as const)
+export const setIsLoggedInAC = (value: boolean) => ({ type: ACTIONS_TYPE.SET_LOGGED_IN, payload: value } as const)
 
-export const authThunk = (email: string, password: string, rememberMe: boolean) => {
-    return (dispatch: Dispatch) => {
-        authAPI.Login(email, password, rememberMe)
+export const loginTC = (data: LoginParamsType) => {
+    return (dispatch: Dispatch<ActionsType>) => {
+        authAPI.Login(data)
             .then(res => {
                 console.log(res.data)
-                // dispatch(setLoginAC())
+                dispatch(setIsLoggedInAC(true))
             })
             .catch(error => {
                 alert(error)
@@ -45,5 +45,5 @@ export const authThunk = (email: string, password: string, rememberMe: boolean) 
 
 
 
-export type setLoginACType = ReturnType<typeof setLoginAC>;
+export type setLoginACType = ReturnType<typeof setIsLoggedInAC>;
 export type ActionsType = setLoginACType
