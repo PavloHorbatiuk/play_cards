@@ -12,10 +12,8 @@ import Paper from '@mui/material/Paper/Paper';
 import styled from '@mui/material/styles/styled';
 import BasicAlerts from './alerts/Alerts';
 import { useDispatch } from 'react-redux';
-import { loginTC } from '../../store/Login/auth-reducers';
-import { useAppSelector } from '../../store/state';
-import { Navigate } from 'react-router-dom';
-
+import { loginTC } from '../../store/auth/auth-reducers';
+import ErrorSnackbar from './alerts/ErrorSnackbar';
 
 
 type FormikErrorType = {
@@ -36,7 +34,6 @@ const Item = styled(Paper)(({ theme }) => ({
 export const LoginPage = () => {
 
     const dispatch = useDispatch();
-    const IsloggedIn = useAppSelector(state => state.login)
 
     const formik = useFormik({
         initialValues: {
@@ -63,9 +60,7 @@ export const LoginPage = () => {
             formik.resetForm();
         },
     })
-    if (IsloggedIn.isLoggedIn) {
-        return <Navigate to='/' />
-    }
+
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
             <Item>
@@ -74,7 +69,7 @@ export const LoginPage = () => {
                         <FormLabel>
                             <p>To log in get registered
                                 <a href={'https://social-network.samuraijs.com/'}
-                                    target={'_blank'}> here
+                                    target={'_blank'} rel="noreferrer"> here
                                 </a>
                             </p>
                             <p>or use common test account credentials:</p>
@@ -87,7 +82,7 @@ export const LoginPage = () => {
                                 margin="normal"
                                 {...formik.getFieldProps('email')} />
                             {formik.touched.email && formik.errors.email
-                                ? <div >< BasicAlerts error={formik.errors.email} /></div>
+                                ? <div>< BasicAlerts error={formik.errors.email} /></div>
                                 : null
                             }
                             <TextField
@@ -102,13 +97,14 @@ export const LoginPage = () => {
                             }
                             <FormControlLabel label={'Remember me'} control={<Checkbox />}
                                 {...formik.getFieldProps('rememberMe')} />
-                           
-                                <Button type={'submit'} variant={'contained'} color={'primary'}>
-                                    Login
-                                </Button>                          
+
+                            <Button type={'submit'} variant={'contained'} color={'primary'}>
+                                Login
+                            </Button>
                         </FormGroup>
                     </FormControl>
                 </form>
+                <ErrorSnackbar />
             </Item>
         </Grid>
     </Grid >

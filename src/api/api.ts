@@ -8,10 +8,17 @@ export const authAPI = {
     Login(data: LoginParamsType) {
         return instance.post<LoginParamsType>('auth/login', data)
     },
+    registration(data: RegistrationType) {
+        return instance.post<RegistrationType>('auth/register', data)
+    }
 
 }
 
 
+export type RegistrationType = {
+    email: string,
+    password: string
+}
 export type LoginParamsType = {
     email: string,
     password: string,

@@ -4,7 +4,7 @@
 
 .generalContainer {
     background-color: rgb(214, 172, 172);
-    background: url('./../assets/backgraund.jpg') top left repeat;
+    background: url('./../../../assets/backgraund.jpg') top left repeat;
     display: flex;
     align-items: center;
     justify-content: center;
