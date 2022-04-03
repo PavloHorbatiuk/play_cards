@@ -1,3 +1,4 @@
+import { Interface } from "readline";
 import { Dispatch } from "redux";
 import { authAPI, LoginParamsType, RegistrationType } from "../../api/api";
 
@@ -7,7 +8,7 @@ enum ACTIONS_TYPE {
     SET_ERROR = 'SET/ERROR'
 }
 
-type DataType = {
+export interface DataType {
     name: string,
     avatar?: string;
     publicCardPacksCount: number;
@@ -16,18 +17,24 @@ type DataType = {
 // export type InitialStateType = typeof initialState
 export type InitialStateType = {
     isLoggedIn: boolean;
-    data: Array<DataType>;
-    error: null | string
+    data: DataType
+    error: null | string,
+
 }
 const initialState = {
     isLoggedIn: false,
-    data: [],
+    data: {} as DataType,
     error: null
 }
 
 
 export const AuthReducers = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
+        case ACTIONS_TYPE.SET_DATA_USER: {
+            return {
+                ...state, data: action.payload
+            }
+        }
         case ACTIONS_TYPE.SET_ERROR: {
             return {
                 ...state, error: action.payload
@@ -48,13 +55,13 @@ export const setIsLoggedInAC = (value: boolean) => ({ type: ACTIONS_TYPE.SET_LOG
 export const setRegistrationAC = (value: boolean) => ({ type: ACTIONS_TYPE.SET_LOGGED_IN, payload: value } as const)
 export const errorAC = (error: null | string) => ({ type: ACTIONS_TYPE.SET_ERROR, payload: error } as const)
 
-export const loginTC = (data: LoginParamsType) => {
+export const loginTC = (values: LoginParamsType) => {
     return (dispatch: Dispatch<ActionsType>) => {
-        authAPI.Login(data)
+        authAPI.Login(values)
             .then(res => {
-                console.log(res.data)
+                console.log(res)
                 dispatch(setIsLoggedInAC(true));
-                // dispatch(setDataUserAC(res.data))
+                dispatch(setDataUserAC(res))
             })
             .catch(e => {
                 const error = e.response ? e.response.data.error : (e.message + ', more details in the console')

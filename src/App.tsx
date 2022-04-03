@@ -6,7 +6,7 @@ import './App.css';
 import Login from './components/auth/Login/Login';
 import Registration from './components/auth/Registration/Registration';
 import Profile from './components/profile/Profile';
-import { useAppSelector } from './store/state';
+
 
 export const theme = createTheme({
   components: {
@@ -25,10 +25,7 @@ export const theme = createTheme({
 });
 
 function App() {
-  const IsloggedIn = useAppSelector(state => state.login)
-  if (IsloggedIn.isLoggedIn) {
-    return <Navigate to='/' />
-  }
+
 
 
   return (

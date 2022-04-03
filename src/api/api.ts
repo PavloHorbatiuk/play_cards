@@ -1,4 +1,5 @@
 import axios from "axios";
+import { DataType } from "../store/auth/auth-reducers";
 
 
 const instance = axios.create({
@@ -6,7 +7,7 @@ const instance = axios.create({
 })
 export const authAPI = {
     Login(data: LoginParamsType) {
-        return instance.post<LoginParamsType>('auth/login', data)
+        return instance.post<LoginParamsType, DataType>('auth/login', data)
     },
     registration(data: RegistrationType) {
         return instance.post<RegistrationType>('auth/register', data)
