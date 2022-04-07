@@ -1,0 +1,64 @@
+.header {
+  background-color: #ebe0e9;
+  width: 100%;
+  position: absolute;
+  z-index: 50;
+  height: 60px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  .container {
+    display: flex;
+    justify-content: center;
+    height: 60px;
+  }
+  .navStyle {
+    display: flex;
+
+    .nav_title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "SF UI Display";
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 16px;
+      color: #2d2e46;
+      opacity: 0.4;
+      letter-spacing: 0.4000000059604645px;
+      width: 173px;
+      height: 60px;
+    }
+    .nav_title:hover {
+      background-color: #dcccdb;
+      transition: all 0.5s;
+      opacity: inherit;
+      border-bottom: 3px solid #21268f;
+    }
+  }
+}
+
+.logo {
+  display: flex;
+  font-family: Poppins;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 39px;
+  color: #2d2e46;
+  position: absolute;
+  left: 0;
+  height: 100%;
+  align-items: center;
+}
+
+.image_profile {
+  margin-right: 8px;
+  width: 15.5px;
+  height: 16.5px;
+}
+.image {
+  width: 36px;
+  height: 36px;
+  margin-right: 8px;
+}

@@ -10,11 +10,11 @@ import { useFormik } from 'formik';
 import Paper from '@mui/material/Paper/Paper';
 import styled from '@mui/material/styles/styled';
 import { useDispatch } from 'react-redux';
-import { Navigate } from 'react-router-dom';
 import BasicAlerts from '../../featers/alerts/Alerts';
-import { useAppSelector } from '../../../store/state';
 import { registrationTC } from '../../../store/auth/auth-reducers';
 import s from './../Login/Login.module.css'
+import ErrorSnackbar from '../../featers/alerts/ErrorSnackbar';
+import { Link } from 'react-router-dom';
 
 
 
@@ -36,7 +36,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 function Registration() {
     const dispatch = useDispatch();
-    const IsloggedIn = useAppSelector(state => state.login)
+
 
     const formik = useFormik({
         initialValues: {
@@ -63,9 +63,7 @@ function Registration() {
             formik.resetForm();
         },
     })
-    if (IsloggedIn.isLoggedIn) {
-        return <Navigate to='/' />
-    }
+
     return <div className={s.generalContainer}>
         <Grid container justifyContent={'center'}>
             <Grid item justifyContent={'center'}>
@@ -94,9 +92,11 @@ function Registration() {
                                 <Button type={'submit'} variant={'contained'} color={'primary'}>
                                     Registration
                                 </Button>
+                                <Link to="/login">Login</Link>
                             </FormGroup>
                         </FormControl>
                     </form>
+                    <ErrorSnackbar />
                 </Item>
             </Grid>
         </Grid >

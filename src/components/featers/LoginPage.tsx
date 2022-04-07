@@ -14,6 +14,9 @@ import BasicAlerts from './alerts/Alerts';
 import { useDispatch } from 'react-redux';
 import { loginTC } from '../../store/auth/auth-reducers';
 import ErrorSnackbar from './alerts/ErrorSnackbar';
+import { useAppSelector } from '../../store/state';
+import { Link, Navigate } from 'react-router-dom';
+import Typography from '@mui/material/Typography/Typography';
 
 
 type FormikErrorType = {
@@ -25,14 +28,17 @@ type FormikErrorType = {
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
-    padding: theme.spacing(4),
+    padding: theme.spacing(1),
     textAlign: 'center',
     color: theme.palette.text.secondary,
+    alignItems: "center",
+    height: "600px",
+    width: "413px",
 }));
 
 
 export const LoginPage = () => {
-
+    const IsloggedIn = useAppSelector(state => state.login)
     const dispatch = useDispatch();
 
     const formik = useFormik({
@@ -60,21 +66,36 @@ export const LoginPage = () => {
             formik.resetForm();
         },
     })
+    if (IsloggedIn.isLoggedIn) {
+        return <Navigate to='/' />
+    }
 
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
-            <Item>
+            <Item sx={{
+                display: "flex",
+                justifyContent: "center"
+            }}>
                 <form onSubmit={formik.handleSubmit}>
-                    <FormControl>
+                    <FormControl >
+                        <Typography sx={{
+                            fontFamily: "Poppins",
+                            fontWeight: "600, Semi Bold",
+                            fontSize: '26px',
+                            lineHeight: "39px",
+                            color: "#2D2E46"
+                        }}>
+                            IT-incubator
+                        </Typography>
                         <FormLabel>
-                            <p>To log in get registered
-                                <a href={'https://social-network.samuraijs.com/'}
-                                    target={'_blank'} rel="noreferrer"> here
-                                </a>
-                            </p>
-                            <p>or use common test account credentials:</p>
-                            <p>Email: free@samuraijs.com</p>
-                            <p>Password: free</p>
+                            <Typography>
+                                <p>To log in get registered
+                                    <Link to={'/registration'}> Registration</Link>
+                                </p>
+                                <p>or use common test account credentials:</p>
+                                <p>Email: free@samuraijs.com</p>
+                                <p>Password: free</p>
+                            </Typography>
                         </FormLabel>
                         <FormGroup>
                             <TextField
@@ -89,6 +110,7 @@ export const LoginPage = () => {
                                 type="password"
                                 label="Password"
                                 margin="normal"
+
                                 {...formik.getFieldProps('password')}
                             />
                             {formik.touched.password && formik.errors.password

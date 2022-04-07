@@ -1,4 +1,3 @@
-import { Interface } from "readline";
 import { Dispatch } from "redux";
 import { authAPI, LoginParamsType, RegistrationType } from "../../api/api";
 
@@ -8,22 +7,25 @@ enum ACTIONS_TYPE {
     SET_ERROR = 'SET/ERROR'
 }
 
-export interface DataType {
+export type DataType = {
     name: string,
     avatar?: string;
     publicCardPacksCount: number;
 }
 
-// export type InitialStateType = typeof initialState
 export type InitialStateType = {
     isLoggedIn: boolean;
-    data: DataType
+    userData: DataType;
     error: null | string,
 
 }
 const initialState = {
     isLoggedIn: false,
-    data: {} as DataType,
+    userData: {
+        name: '',
+        avatar: '',
+        publicCardPacksCount: 0
+    },
     error: null
 }
 
@@ -32,7 +34,7 @@ export const AuthReducers = (state: InitialStateType = initialState, action: Act
     switch (action.type) {
         case ACTIONS_TYPE.SET_DATA_USER: {
             return {
-                ...state, data: action.payload
+                ...state, userData: action.payload
             }
         }
         case ACTIONS_TYPE.SET_ERROR: {
@@ -59,9 +61,9 @@ export const loginTC = (values: LoginParamsType) => {
     return (dispatch: Dispatch<ActionsType>) => {
         authAPI.Login(values)
             .then(res => {
-                console.log(res)
+                console.log(res.data)
                 dispatch(setIsLoggedInAC(true));
-                dispatch(setDataUserAC(res))
+                dispatch(setDataUserAC(res.data))
             })
             .catch(e => {
                 const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
@@ -74,9 +76,10 @@ export const registrationTC = (data: RegistrationType) => {
     return (dispatch: Dispatch<ActionsType>) => {
         authAPI.registration(data)
             .then(res => {
-                console.log(res.data)
             })
-            .catch(error => {
+            .catch(e => {
+                const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
+                console.log('Error: ', { ...e });
                 dispatch(errorAC(error))
             })
     }
