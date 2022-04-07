@@ -2,6 +2,7 @@
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import PageNotFound from './components/404Error/404ErrorPage';
 import Login from './components/auth/Login/Login';
 import Registration from './components/auth/Registration/Registration';
 import Profile from './components/profile/Profile';
@@ -22,7 +23,7 @@ function App() {
           < Route path='/' element={< Profile />} />
           < Route path='profile' element={< Profile />} />
           < Route path='login' element={< Login />} />
-          < Route path='/404' element={<h1 style={{ textAlign: "center" }}> 404: PAGE NOT FOUND</h1>} />
+          < Route path='/404' element={<PageNotFound />} />
           < Route path="*" element={< Navigate to='/404' />} />
         </Routes >
       </ThemeProvider >

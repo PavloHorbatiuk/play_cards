@@ -93,7 +93,7 @@ export const LoginPage = () => {
                                     <Link to={'/registration'}> Registration</Link>
                                 </p>
                                 <p>or use common test account credentials:</p>
-                                <p>Email: free@samuraijs.com</p>
+                                <p>Email: nya-admin@nya.nya</p>
                                 <p>Password: free</p>
                             </Typography>
                         </FormLabel>

@@ -31,9 +31,9 @@ function Profile() {
     return (
         <>
             <Header />
-<div className="div main_box">
-    
-</div>
+            <div className="main_box">
+                profile
+            </div>
 
         </>
     )
