@@ -17,6 +17,7 @@ import ErrorSnackbar from './alerts/ErrorSnackbar';
 import { useAppSelector } from '../../store/state';
 import { Link, Navigate } from 'react-router-dom';
 import Typography from '@mui/material/Typography/Typography';
+import { PATH } from '../../enums/routs';
 
 
 type FormikErrorType = {
@@ -34,6 +35,7 @@ const Item = styled(Paper)(({ theme }) => ({
     alignItems: "center",
     height: "600px",
     width: "413px",
+
 }));
 
 
@@ -67,7 +69,7 @@ export const LoginPage = () => {
         },
     })
     if (IsloggedIn.isLoggedIn) {
-        return <Navigate to='/' />
+        return <Navigate to={PATH.MAIN} />
     }
 
     return <Grid container justifyContent={'center'}>
@@ -88,14 +90,12 @@ export const LoginPage = () => {
                             IT-incubator
                         </Typography>
                         <FormLabel>
-                            <Typography>
-                                <p>To log in get registered
-                                    <Link to={'/registration'}> Registration</Link>
-                                </p>
-                                <p>or use common test account credentials:</p>
-                                <p>Email: nya-admin@nya.nya</p>
-                                <p>Password: free</p>
+                            <Typography>To log in get registered
+                                <Link to={'/registration'}> Registration</Link>
                             </Typography>
+                            <Typography>or use common test account credentials:</Typography>
+                            <Typography>Email: nya-admin@nya.nya</Typography>
+                            <Typography>Password: free</Typography>
                         </FormLabel>
                         <FormGroup>
                             <TextField
@@ -120,7 +120,7 @@ export const LoginPage = () => {
                             <FormControlLabel label={'Remember me'} control={<Checkbox />}
                                 {...formik.getFieldProps('rememberMe')} />
 
-                            <Button type={'submit'} variant={'contained'} color={'primary'}>
+                            <Button type={'submit'} variant={'contained'} sx={{ margin: "0 auto" }} color={'primary'}>
                                 Login
                             </Button>
                         </FormGroup>

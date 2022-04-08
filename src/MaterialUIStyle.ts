@@ -1,5 +1,13 @@
 import createTheme from '@mui/material/styles/createTheme';
+
+
 export const theme = createTheme({
+
+	palette: {
+		text: {
+			primary: "#2D2E46",
+		}
+	},
 
 	typography: {
 		fontFamily: "Poppins"
@@ -25,7 +33,7 @@ export const theme = createTheme({
 					color: "#ECECF9",
 					textShadow: "0px 1px 1px rgba(0, 0, 0, 0.25);",
 					alignItems: "center",
-					textTransform: "inherit"
+					textTransform: "inherit",
 				},
 
 			},
@@ -38,5 +46,12 @@ export const theme = createTheme({
 				}
 			}
 		},
+		MuiTypography: {
+			styleOverrides: {
+				root: {
+					color: "#2D2E46"
+				}
+			}
+		}
 	},
 });

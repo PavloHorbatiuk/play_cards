@@ -4,6 +4,7 @@
   background-color: #fefeff;
   top: 70px;
   border-radius: 8px;
+  justify-content: space-evenly;
   .textContainer div {
     display: flex;
   }
@@ -16,6 +17,9 @@
   .imageContainer {
     display: flex;
     align-items: center;
+  }
+  .textItem {
+    margin-top: 15px;
   }
 }
 .img {

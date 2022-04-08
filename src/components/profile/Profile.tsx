@@ -6,6 +6,7 @@ import styled from '@mui/material/styles/styled'
 import React from 'react'
 import { useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
+import { PATH } from '../../enums/routs'
 import { useAppSelector } from '../../store/state'
 import Header from '../header/Header'
 import s from './Profile.module.css'
@@ -26,7 +27,7 @@ function Profile() {
 
     })
     if (!state.isLoggedIn) {
-        return <Navigate to='/login' />
+        return <Navigate to={PATH.LOGIN} />
     }
     return (
         <>
