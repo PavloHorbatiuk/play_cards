@@ -1,9 +1,9 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
 import { useAppSelector } from '../../../store/state'
-import LinearDeterminate from '../../featers/loader/LinearDeterminate'
 import { LoginPage } from '../../featers/LoginPage'
 import s from './../Login/Login.module.css'
+
 
 function Login() {
 
@@ -16,7 +16,6 @@ function Login() {
 
     return (
         <div className={s.generalContainer}>
-
             <LoginPage />
         </div>
     )

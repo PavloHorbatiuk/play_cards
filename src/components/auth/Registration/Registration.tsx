@@ -1,9 +1,7 @@
 import React from 'react'
 import Grid from '@mui/material/Grid';
 import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
-import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useFormik } from 'formik';
@@ -85,6 +83,12 @@ function Registration() {
                                     margin="normal"
                                     {...formik.getFieldProps('password')}
                                 />
+                                <TextField
+                                    type="password"
+                                    label="Password"
+                                    margin="normal"
+                                    {...formik.getFieldProps('password')}
+                                />
                                 {formik.touched.password && formik.errors.password
                                     ? <div><BasicAlerts error={formik.errors.password} /></div>
                                     : null
@@ -100,7 +104,7 @@ function Registration() {
                 </Item>
             </Grid>
         </Grid >
-    </div>
+    </div >
 }
 
 export default Registration

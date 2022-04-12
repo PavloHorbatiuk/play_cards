@@ -1,46 +1,44 @@
-import Box from '@mui/material/Box/Box'
-import Container from '@mui/material/Container/Container'
-import Grid from '@mui/material/Grid/Grid'
-import Paper from '@mui/material/Paper/Paper'
-import styled from '@mui/material/styles/styled'
+
+import Avatar from '@mui/material/Avatar';
 import React from 'react'
-import { useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import { PATH } from '../../enums/routs'
 import { useAppSelector } from '../../store/state'
 import Header from '../header/Header'
-import s from './Profile.module.css'
+import s from './Profile.module.scss'
+import styles from './../../index.module.scss'
 
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    color: theme.palette.text.secondary,
-    textAlign: 'center',
-    alignItems: "center"
-}));
 
 function Profile() {
     const state = useAppSelector(state => state.login)
-    useEffect(() => {
 
-    })
     if (!state.isLoggedIn) {
         return <Navigate to={PATH.LOGIN} />
     }
     return (
         <>
             <Header />
-            <div className="main_box">
-                profile
+            <div className={`${s.warper} ${styles.container}`}>
+                <div className={s.profileContent}>
+                    <div className={s.profileBox}>
+                        <Avatar
+                            alt="avatar"
+                            src={state.userData.avatar}
+                            sx={{ width: 96, height: 96 }}
+                            className={s.picture}
+                        />
+                        <span className={s.title}>{state.userData.name}</span>
+                        <button className={s.btn}>Edit profile</button>
+                    </div>
+                </div>
+                <div className={s.content}>
+                    content
+                </div>
             </div>
-
         </>
     )
 }
 
 export default Profile
 
-// {state.userData.name}
-//                                 {state.userData.publicCardPacksCount}

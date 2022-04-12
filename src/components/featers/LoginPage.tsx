@@ -18,7 +18,22 @@ import { useAppSelector } from '../../store/state';
 import { Link, Navigate } from 'react-router-dom';
 import Typography from '@mui/material/Typography/Typography';
 import { PATH } from '../../enums/routs';
+import makeStyles from '@mui/styles/makeStyles/makeStyles';
 
+
+const useStyles = makeStyles({
+    txtItem: {
+        fontWeight: "600, Semi Bold",
+        fontSize: '26px',
+        lineHeight: "39px",
+        color: "#2D2E46",
+        marginBottom: "20px"
+    },
+    btn: {
+        margin: "0 auto",
+        marginTop: "20px"
+    }
+});
 
 type FormikErrorType = {
     email?: string
@@ -42,6 +57,7 @@ const Item = styled(Paper)(({ theme }) => ({
 export const LoginPage = () => {
     const IsloggedIn = useAppSelector(state => state.login)
     const dispatch = useDispatch();
+    const classes = useStyles();
 
     const formik = useFormik({
         initialValues: {
@@ -80,22 +96,16 @@ export const LoginPage = () => {
             }}>
                 <form onSubmit={formik.handleSubmit}>
                     <FormControl >
-                        <Typography sx={{
-                            fontFamily: "Poppins",
-                            fontWeight: "600, Semi Bold",
-                            fontSize: '26px',
-                            lineHeight: "39px",
-                            color: "#2D2E46"
-                        }}>
+                        <Typography variant="h4" className={classes.txtItem} >
                             IT-incubator
                         </Typography>
                         <FormLabel>
-                            <Typography>To log in get registered
+                            <Typography >To log in get registered
                                 <Link to={'/registration'}> Registration</Link>
                             </Typography>
-                            <Typography>or use common test account credentials:</Typography>
+                            <Typography >or use common test account credentials:</Typography>
                             <Typography>Email: nya-admin@nya.nya</Typography>
-                            <Typography>Password: free</Typography>
+                            <Typography sx={{ marginBottom: "20px " }}>Password: free</Typography>
                         </FormLabel>
                         <FormGroup>
                             <TextField
@@ -119,8 +129,7 @@ export const LoginPage = () => {
                             }
                             <FormControlLabel label={'Remember me'} control={<Checkbox />}
                                 {...formik.getFieldProps('rememberMe')} />
-
-                            <Button type={'submit'} variant={'contained'} sx={{ margin: "0 auto" }} color={'primary'}>
+                            <Button className={classes.btn} type={'submit'} variant={'contained'} color={'primary'}>
                                 Login
                             </Button>
                         </FormGroup>
