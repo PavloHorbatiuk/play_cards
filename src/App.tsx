@@ -14,6 +14,7 @@ import { initializedApp } from './store/auth/auth-reducers';
 import { useAppSelector } from './store/state';
 import Loader from './store/loader/Loader';
 import { Login } from './components/auth/Login/Login';
+import RecoveryPassword from './components/auth/RecoveryPassword/RecoveryPassword';
 
 
 
@@ -33,6 +34,7 @@ function App() {
 
   if (!initialized.initializedApp) {
     return <Loader />
+
   }
 
   return (
@@ -44,6 +46,7 @@ function App() {
           < Route path={PATH.MAIN} element={< Profile />} />
           < Route path={PATH.PROFILE} element={< Profile />} />
           < Route path={PATH.LOGIN} element={< Login />} />
+          < Route path={PATH.RECOVERY_PASSWORD} element={< RecoveryPassword />} />
           < Route path={PATH.ERROR} element={<PageNotFound />} />
           < Route path={PATH.WRONG_PAGE} element={< Navigate to={PATH.ERROR} />} />
         </Routes >

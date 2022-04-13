@@ -32,7 +32,7 @@ const useStyles = makeStyles({
         marginBottom: "20px"
     },
     btn: {
-        margin: "0 auto",
+
         marginTop: "20px"
     },
     link: {
@@ -65,6 +65,7 @@ function Registration() {
         initialValues: {
             email: '',
             password: '',
+            confirmPassword: ''
         },
         validate: (values) => {
             const errors: FormikErrorType = {};
@@ -77,6 +78,10 @@ function Registration() {
                 errors.password = 'Required'
             } else if (values.password.length <= 2) {
                 errors.password = 'Invalid password'
+            } if (!values.confirmPassword) {
+                errors.password = "Required"
+            } else if (values.password !== values.confirmPassword) {
+                errors.password = "passwords do not match"
             }
             return errors;
         },
@@ -109,17 +114,21 @@ function Registration() {
                                     margin="normal"
                                     {...formik.getFieldProps('password')}
                                 />
-                                <TextField
-                                    type="password"
-                                    label="Confirm password"
-                                    margin="normal"
-                                    {...formik.getFieldProps('password')}
-                                />
                                 {formik.touched.password && formik.errors.password
                                     ? <div><BasicAlerts error={formik.errors.password} /></div>
                                     : null
                                 }
-                                <Button className={classes.btn} type={'submit'} variant={'contained'} color={'primary'}>
+                                <TextField
+                                    type="password"
+                                    label="Confirm password"
+                                    margin="normal"
+                                    {...formik.getFieldProps('confirmPassword')}
+                                />
+                                {formik.touched.confirmPassword && formik.errors.confirmPassword
+                                    ? <div><BasicAlerts error={formik.errors.confirmPassword} /></div>
+                                    : null
+                                }
+                                <Button sx={{ marginTop: "20px" }} type={'submit'} variant={'contained'} color={'primary'}>
                                     Registration
                                 </Button>
                                 <Link className={classes.link} to="/login">Cancel</Link>

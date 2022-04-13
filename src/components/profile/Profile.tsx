@@ -11,12 +11,11 @@ import styles from './../../index.module.scss'
 
 
 function Profile() {
+
     const state = useAppSelector(state => state.login)
-    debugger
-    if (!state.isAuth) {
-        return <Navigate to={PATH.LOGIN} />
-    }
-    debugger
+
+    if (!state.isAuth) return <Navigate to={PATH.LOGIN} />
+    
     return (
         <>
             <Header />

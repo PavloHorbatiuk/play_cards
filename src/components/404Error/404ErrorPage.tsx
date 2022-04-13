@@ -6,22 +6,22 @@ import pageNotFoundSVG from './../../assets/404Error.svg'
 import s from './404ErrorPage.module.scss'
 import { useNavigate } from "react-router-dom"
 import styles from './../../index.module.scss'
+import { PATH } from '../../enums/routs'
 
 const MyTypography = styled(Typography)({
 	marginBottom: "20px"
 });
 
 function PageNotFound() {
+
 	let navigate = useNavigate()
 	const onClickHandler = () => {
-		let path = `/`;
-		navigate(path);
+		navigate(PATH.MAIN);
 	}
-
 	return (
 		<div>
 			<Header />
-			<div className={`${s.mainContainer} ${styles.container}`}>
+			< div className={`${s.mainContainer} ${styles.container}`}>
 				<div className={s.textContainer}>
 					<Typography variant='h3'  >
 						Oops....
@@ -47,9 +47,8 @@ function PageNotFound() {
 				<div className={s.imageContainer}>
 					<img className={s.img} src={pageNotFoundSVG} alt="404" />
 				</div>
-
 			</div>
-		</div>
+		</div >
 	)
 }
 

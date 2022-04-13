@@ -1,7 +1,8 @@
+import { AxiosResponse } from "axios";
 import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { authAPI, LoginParamsType, RegistrationType } from "../../api/api";
-import { setStatusAC, setStatusACType } from "../loader/Loader-reducer";
+import { RequestStatusType, setStatusAC, setStatusACType } from "../loader/Loader-reducer";
 import { IGlobalState } from "../state";
 
 enum ACTIONS_TYPE {
@@ -68,16 +69,15 @@ export const setRegistrationAC = (value: boolean) => ({ type: ACTIONS_TYPE.SET_L
 export const errorAC = (error: null | string) => ({ type: ACTIONS_TYPE.SET_ERROR, payload: error } as const)
 export const initializedAppAC = (value: boolean) => ({ type: ACTIONS_TYPE.INITIALIZED_APP, payload: value } as const)
 
-
+const checkErrors = "adf";
 export const loginTC = (values: LoginParamsType): ThunkType => {
     return (dispatch) => {
         dispatch(setStatusAC("loading"))
         authAPI.Login(values)
             .then(res => {
-                if (res.status === 200) {
-                    dispatch(getUserData())
-                    dispatch(setStatusAC("succeeded"))
-                }
+                dispatch(getUserData());
+                dispatch(setStatusAC("succeeded"))
+
             })
             .catch(e => {
                 const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
@@ -91,6 +91,7 @@ export const registrationTC = (data: RegistrationType) => {
         dispatch(setStatusAC("loading"))
         authAPI.registration(data)
             .then(res => {
+                console.log(res)
                 dispatch(setStatusAC("succeeded"))
             })
             .catch(e => {
@@ -118,8 +119,11 @@ export const logOutTC = () => (dispatch: Dispatch) => {
     dispatch(setStatusAC("loading"))
     return authAPI.logOut()
         .then(res => {
-            dispatch(setIsLoggedInAC(false));
-            dispatch(setStatusAC("succeeded"))
+            if (res.status === 200) {
+                dispatch(setIsLoggedInAC(false));
+                dispatch(setStatusAC("succeeded"))
+            }
+
         })
         .catch(e => {
             const error = e.response ? e.response.data.error : (e.message + ', more details in the console')

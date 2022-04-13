@@ -87,9 +87,8 @@ export const Login = () => {
             formik.resetForm();
         },
     })
-    if (isAuth) {
-        return <Navigate to={PATH.MAIN} />
-    }
+    if (isAuth) return <Navigate to={PATH.MAIN} />
+
 
     return (
         <div className={s.generalContainer}>

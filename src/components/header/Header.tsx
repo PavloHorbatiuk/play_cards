@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import s from './Header.module.scss'
 import styles from './../../index.module.scss'
 import profileSVG from './../../assets/01.svg'
@@ -13,12 +13,9 @@ import { useAppSelector } from '../../store/state'
 function Header() {
     const dispatch = useDispatch()
     const isAuth = useAppSelector(state => state.login)
-    let navigate = useNavigate()
-
 
     const onClickLogOut = () => {
         dispatch(logOutTC());
-        navigate(PATH.LOGIN);
     }
 
     return (
