@@ -1,6 +1,8 @@
 import { Dispatch } from "redux";
+import { ThunkAction } from "redux-thunk";
 import { authAPI, LoginParamsType, RegistrationType } from "../../api/api";
 import { setStatusAC, setStatusACType } from "../loader/Loader-reducer";
+import { IGlobalState } from "../state";
 
 enum ACTIONS_TYPE {
     SET_LOGGED_IN = 'login/SET-IS-LOGGED-IN',
@@ -11,18 +13,18 @@ enum ACTIONS_TYPE {
 }
 export type DataType = {
     name: string,
-    avatar?: string;
+    avatar: string;
     publicCardPacksCount: number;
 }
 
 export type InitialStateType = {
-    isLoggedIn: boolean;
+    isAuth: boolean;
     userData: DataType;
     error: null | string,
     initializedApp: boolean;
 }
 const initialState = {
-    isLoggedIn: false,
+    isAuth: false,
     userData: {
         name: '',
         avatar: '',
@@ -52,7 +54,7 @@ export const AuthReducers = (state: InitialStateType = initialState, action: Act
         }
         case ACTIONS_TYPE.SET_LOGGED_IN: {
             return {
-                ...state, isLoggedIn: action.payload,
+                ...state, isAuth: action.payload,
             }
         }
         default:
@@ -67,18 +69,15 @@ export const errorAC = (error: null | string) => ({ type: ACTIONS_TYPE.SET_ERROR
 export const initializedAppAC = (value: boolean) => ({ type: ACTIONS_TYPE.INITIALIZED_APP, payload: value } as const)
 
 
-export const loginTC = (values: LoginParamsType) => {
-    return (dispatch: Dispatch<ActionsType>) => {
+export const loginTC = (values: LoginParamsType): ThunkType => {
+    return (dispatch) => {
         dispatch(setStatusAC("loading"))
         authAPI.Login(values)
             .then(res => {
                 if (res.status === 200) {
-                    console.log(res)
-                    dispatch(setIsLoggedInAC(true))
-                    dispatch(setDataUserAC(res.data));
+                    dispatch(getUserData())
                     dispatch(setStatusAC("succeeded"))
                 }
-
             })
             .catch(e => {
                 const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
@@ -92,7 +91,6 @@ export const registrationTC = (data: RegistrationType) => {
         dispatch(setStatusAC("loading"))
         authAPI.registration(data)
             .then(res => {
-                console.log(res.data.addedUser)
                 dispatch(setStatusAC("succeeded"))
             })
             .catch(e => {
@@ -102,16 +100,13 @@ export const registrationTC = (data: RegistrationType) => {
             })
     }
 }
-export const initializedAppTC = () => (dispatch: Dispatch) => {
-    authAPI.me()
+export const getUserData = () => (dispatch: Dispatch) => {
+    return authAPI.me()
         .then(res => {
             if (res.status === 200) {
-                console.log(res.data)
+                dispatch(setDataUserAC(res.data));
                 dispatch(setIsLoggedInAC(true));
-            } else {
-
             }
-            dispatch(initializedAppAC(true));
         })
         .catch(e => {
             const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
@@ -119,7 +114,29 @@ export const initializedAppTC = () => (dispatch: Dispatch) => {
             dispatch(errorAC(error))
         })
 }
+export const logOutTC = () => (dispatch: Dispatch) => {
+    dispatch(setStatusAC("loading"))
+    return authAPI.logOut()
+        .then(res => {
+            dispatch(setIsLoggedInAC(false));
+            dispatch(setStatusAC("succeeded"))
+        })
+        .catch(e => {
+            const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
+            console.log('Error: ', { ...e });
+            dispatch(errorAC(error))
+        })
+}
+export const initializedApp = (): ThunkType => (dispatch) => {
+    let promise = dispatch(getUserData())
+    Promise.all([promise])
+        .finally(() => {
+            dispatch(initializedAppAC(true))
+        })
+}
 
+export type ThunkType = ThunkAction<void, IGlobalState, unknown, CommonActionType>
+type CommonActionType = ActionsType
 
 export type initializedAppACType = ReturnType<typeof initializedAppAC>;
 export type setDataUserACType = ReturnType<typeof setDataUserAC>;

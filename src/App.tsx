@@ -4,38 +4,36 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import PageNotFound from './components/404Error/404ErrorPage';
-import Login from './components/auth/Login/Login';
+
 import Registration from './components/auth/Registration/Registration';
 import LinearDeterminate from './components/featers/loader/LinearDeterminate';
 import Profile from './components/profile/Profile';
 import { PATH } from './enums/routs';
 import { theme } from './MaterialUIStyle';
-import { initializedAppTC } from './store/auth/auth-reducers';
+import { initializedApp } from './store/auth/auth-reducers';
 import { useAppSelector } from './store/state';
-import s from './App.module.scss'
 import Loader from './store/loader/Loader';
+import { Login } from './components/auth/Login/Login';
+
 
 
 
 
 function App() {
   const featuresState = useAppSelector(state => state.features)
-  const state = useAppSelector(state => state.login)
+  const initialized = useAppSelector(state => state.login)
+  const isAuth = useAppSelector(state => state.login.isAuth)
   const dispatch = useDispatch()
+
+
   useEffect(() => {
-    dispatch(initializedAppTC())
+    dispatch(initializedApp())
   }, [])
 
 
-  // if (!state.initializedApp) {
-  //   return <Loader />
-  // }
-
-
-
-
-
-
+  if (!initialized.initializedApp) {
+    return <Loader />
+  }
 
   return (
     <div >

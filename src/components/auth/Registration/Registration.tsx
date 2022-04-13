@@ -13,14 +13,35 @@ import { registrationTC } from '../../../store/auth/auth-reducers';
 import s from './../Login/Login.module.css'
 import ErrorSnackbar from '../../featers/alerts/ErrorSnackbar';
 import { Link } from 'react-router-dom';
+import makeStyles from '@mui/styles/makeStyles/makeStyles';
+import Typography from '@mui/material/Typography/Typography';
 
 
 
 type FormikErrorType = {
     email?: string
     password?: string
-    rememberMe?: boolean
 }
+
+const useStyles = makeStyles({
+    txtItem: {
+        fontWeight: "600, Semi Bold",
+        fontSize: '26px',
+        lineHeight: "39px",
+        color: "#2D2E46",
+        marginBottom: "20px"
+    },
+    btn: {
+        margin: "0 auto",
+        marginTop: "20px"
+    },
+    link: {
+        color: "#2D2E46",
+        fontSize: '26px',
+        backgroundColor: "#D7D8EF",
+        marginTop: '20px'
+    }
+});
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -28,19 +49,22 @@ const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(4),
     textAlign: 'center',
     color: theme.palette.text.secondary,
+    width: "413px",
+    height: '540px',
+
 }));
 
 
 
 function Registration() {
     const dispatch = useDispatch();
+    const classes = useStyles();
 
 
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
-            rememberMe: false
         },
         validate: (values) => {
             const errors: FormikErrorType = {};
@@ -66,6 +90,8 @@ function Registration() {
         <Grid container justifyContent={'center'}>
             <Grid item justifyContent={'center'}>
                 <Item>
+                    <Typography className={classes.txtItem} variant="h4">It-incubator</Typography>
+                    <Typography className={classes.txtItem} variant="h4">Sign Up</Typography>
                     <form onSubmit={formik.handleSubmit}>
                         <FormControl>
                             <FormGroup>
@@ -85,7 +111,7 @@ function Registration() {
                                 />
                                 <TextField
                                     type="password"
-                                    label="Password"
+                                    label="Confirm password"
                                     margin="normal"
                                     {...formik.getFieldProps('password')}
                                 />
@@ -93,10 +119,10 @@ function Registration() {
                                     ? <div><BasicAlerts error={formik.errors.password} /></div>
                                     : null
                                 }
-                                <Button type={'submit'} variant={'contained'} color={'primary'}>
+                                <Button className={classes.btn} type={'submit'} variant={'contained'} color={'primary'}>
                                     Registration
                                 </Button>
-                                <Link to="/login">Login</Link>
+                                <Link className={classes.link} to="/login">Cancel</Link>
                             </FormGroup>
                         </FormControl>
                     </form>

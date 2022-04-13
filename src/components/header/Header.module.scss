@@ -52,6 +52,31 @@
   height: 100%;
   align-items: center;
 }
+.logOut {
+  display: flex;
+  font-family: "SF UI Display";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #2d2e46;
+  position: absolute;
+  right: 0;
+  height: 100%;
+  align-items: center;
+  opacity: 0.4;
+  letter-spacing: 0.4000000059604645px;
+  width: 173px;
+  height: 60px;
+  transition: all 0.5s ease;
+  justify-content: center;
+  background-color: inherit;
+}
+.logOut:hover {
+  background-color: #dcccdb;
+  transition: all 0.5s ease;
+  opacity: inherit;
+  border-bottom: 3px solid #21268f;
+}
 
 .imageProfile {
   margin-right: 8px;
