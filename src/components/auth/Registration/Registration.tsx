@@ -32,7 +32,7 @@ const useStyles = makeStyles({
         marginBottom: "20px"
     },
     btn: {
-
+        margin: "0 auto",
         marginTop: "20px"
     },
     link: {
@@ -128,7 +128,7 @@ function Registration() {
                                     ? <div><BasicAlerts error={formik.errors.confirmPassword} /></div>
                                     : null
                                 }
-                                <Button sx={{ marginTop: "20px" }} type={'submit'} variant={'contained'} color={'primary'}>
+                                <Button className={classes.btn} type={'submit'} variant={'contained'} color={'primary'}>
                                     Registration
                                 </Button>
                                 <Link className={classes.link} to="/login">Cancel</Link>

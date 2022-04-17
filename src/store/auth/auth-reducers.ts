@@ -1,8 +1,7 @@
-import { AxiosResponse } from "axios";
 import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { authAPI, LoginParamsType, RegistrationType } from "../../api/api";
-import { RequestStatusType, setStatusAC, setStatusACType } from "../loader/Loader-reducer";
+import { setStatusAC, setStatusACType } from "../loader/Loader-reducer";
 import { IGlobalState } from "../state";
 
 enum ACTIONS_TYPE {
@@ -69,35 +68,53 @@ export const setRegistrationAC = (value: boolean) => ({ type: ACTIONS_TYPE.SET_L
 export const errorAC = (error: null | string) => ({ type: ACTIONS_TYPE.SET_ERROR, payload: error } as const)
 export const initializedAppAC = (value: boolean) => ({ type: ACTIONS_TYPE.INITIALIZED_APP, payload: value } as const)
 
-const checkErrors = "adf";
-export const loginTC = (values: LoginParamsType): ThunkType => {
-    return (dispatch) => {
-        dispatch(setStatusAC("loading"))
-        authAPI.Login(values)
-            .then(res => {
-                dispatch(getUserData());
-                dispatch(setStatusAC("succeeded"))
+const refactorErrorFunction = (e: any, dispatch: Dispatch) => {
+    const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
+    console.log('Error: ', { ...e });
+    dispatch(errorAC(error))
+    dispatch(setStatusAC("succeeded"))
+}
 
-            })
-            .catch(e => {
-                const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
-                console.log('Error: ', { ...e });
-                dispatch(errorAC(error))
-            })
+// export const loginTC = (values: LoginParamsType): ThunkType => {
+//     return (dispatch) => {
+//         dispatch(setStatusAC("loading"))
+//         authAPI.Login(values)
+//             .then(res => {
+//                 console.log(res)
+//                 dispatch(getUserData());
+//                 dispatch(setStatusAC("succeeded"))
+
+//             })
+//             .catch(e => {
+//                 const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
+//                 console.log('Error: ', { ...e });
+//                 dispatch(errorAC(error))
+//             })
+//     }
+// }
+export const loginTC = (values: LoginParamsType): ThunkType => async (dispatch) => {
+    dispatch(setStatusAC("loading"))
+    try {
+        const user = await authAPI.Login(values)
+        const { statusText } = user
+        console.log(user)
+        statusText === 'OK' ? dispatch(getUserData()) : dispatch(getUserData())
+        dispatch(setStatusAC("succeeded"))
+
+    } catch (e: any) {
+        refactorErrorFunction(e, dispatch)
     }
+
 }
 export const registrationTC = (data: RegistrationType) => {
     return (dispatch: Dispatch<ActionsType>) => {
         dispatch(setStatusAC("loading"))
         authAPI.registration(data)
             .then(res => {
-                console.log(res)
                 dispatch(setStatusAC("succeeded"))
             })
             .catch(e => {
-                const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
-                console.log('Error: ', { ...e });
-                dispatch(errorAC(error))
+                refactorErrorFunction(e, dispatch)
             })
     }
 }
@@ -110,9 +127,7 @@ export const getUserData = () => (dispatch: Dispatch) => {
             }
         })
         .catch(e => {
-            const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
-            console.log('Error: ', { ...e });
-            dispatch(errorAC(error))
+            refactorErrorFunction(e, dispatch)
         })
 }
 export const logOutTC = () => (dispatch: Dispatch) => {
@@ -126,9 +141,7 @@ export const logOutTC = () => (dispatch: Dispatch) => {
 
         })
         .catch(e => {
-            const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
-            console.log('Error: ', { ...e });
-            dispatch(errorAC(error))
+            refactorErrorFunction(e, dispatch)
         })
 }
 export const initializedApp = (): ThunkType => (dispatch) => {
