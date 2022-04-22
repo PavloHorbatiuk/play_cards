@@ -23,16 +23,13 @@ import s from './../Login/Login.module.css'
 
 
 const useStyles = makeStyles({
-    txtItem: {
-        fontWeight: "600, Semi Bold",
-        fontSize: '26px',
-        lineHeight: "39px",
-        color: "#2D2E46",
-        marginBottom: "20px"
-    },
     btn: {
         margin: "0 auto",
-        marginTop: "20px"
+    },
+    recovery: {
+        display: "flex",
+        justifyContent: "end",
+        marginBottom: "20px"
     }
 });
 
@@ -51,7 +48,6 @@ const Item = styled(Paper)(({ theme }) => ({
     alignItems: "center",
     height: "600px",
     width: "413px",
-
 }));
 
 
@@ -100,17 +96,12 @@ export const Login = () => {
                     }}>
                         <form onSubmit={formik.handleSubmit}>
                             <FormControl >
-                                <Typography variant="h4" className={classes.txtItem} >
+                                <Typography variant="h4" >
                                     IT-incubator
                                 </Typography>
-                                <FormLabel>
-                                    <Typography >To log in get registered
-                                        <Link to={'/registration'}> Registration</Link>
-                                    </Typography>
-                                    <Typography >or use common test account credentials:</Typography>
-                                    <Typography>Email: nya-admin@nya.nya</Typography>
-                                    <Typography sx={{ marginBottom: "20px " }}>Password: free</Typography>
-                                </FormLabel>
+                                <Typography variant="h4" sx={{ marginBottom: "20px" }} >
+                                    Sign In
+                                </Typography>
                                 <FormGroup>
                                     <TextField
                                         label="Email"
@@ -131,18 +122,31 @@ export const Login = () => {
                                         ? <div><BasicAlerts error={formik.errors.password} /></div>
                                         : null
                                     }
-                                    <FormControlLabel label={'Remember me'} control={<Checkbox />}
+                                    <Link to={PATH.RECOVERY_PASSWORD}>
+                                        <Typography className={classes.recovery} variant="h2">
+                                            Forgot Password
+                                        </Typography>
+                                    </Link>
+                                    <FormControlLabel sx={{ marginTop: '80px' }} label={'Remember me'} control={<Checkbox />}
                                         {...formik.getFieldProps('rememberMe')} />
                                     <Button className={classes.btn} type={'submit'} variant={'contained'} color={'primary'}>
                                         Login
                                     </Button>
                                 </FormGroup>
+                                <Typography sx={{ marginTop: '31px' }} variant="h3">
+                                    Don’t have an account?
+                                </Typography >
+                                <Link to={PATH.REGISTRATION}>
+                                    <Typography variant="h2">
+                                        Sign Up
+                                    </Typography>
+                                </Link>
                             </FormControl>
                         </form>
                         <ErrorSnackbar />
                     </Item>
                 </Grid>
             </Grid >
-        </div>
+        </div >
     )
 }

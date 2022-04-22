@@ -12,9 +12,11 @@ import BasicAlerts from '../../featers/alerts/Alerts';
 import { registrationTC } from '../../../store/auth/auth-reducers';
 import s from './../Login/Login.module.css'
 import ErrorSnackbar from '../../featers/alerts/ErrorSnackbar';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import makeStyles from '@mui/styles/makeStyles/makeStyles';
 import Typography from '@mui/material/Typography/Typography';
+import { useAppSelector } from '../../../store/state';
+import { PATH } from '../../../enums/routs';
 
 
 
@@ -59,7 +61,7 @@ const Item = styled(Paper)(({ theme }) => ({
 function Registration() {
     const dispatch = useDispatch();
     const classes = useStyles();
-
+    const state = useAppSelector(state => state.login)
 
     const formik = useFormik({
         initialValues: {
@@ -90,7 +92,7 @@ function Registration() {
             formik.resetForm();
         },
     })
-
+    if (state.isRegistration) return <Navigate to={PATH.LOGIN} />
     return <div className={s.generalContainer}>
         <Grid container justifyContent={'center'}>
             <Grid item justifyContent={'center'}>
